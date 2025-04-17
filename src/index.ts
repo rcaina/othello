@@ -2,7 +2,12 @@
 
 import * as readline from 'readline';
 
-type Piece = 'B' | 'W' | null;
+class Color {
+    static readonly BLACK: 'B' = 'B';
+    static readonly WHITE: 'W' = 'W';
+}
+
+type Piece = typeof Color.BLACK | typeof Color.WHITE | null;
 
 class Board {
     size: number = 8;
