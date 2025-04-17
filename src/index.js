@@ -35,6 +35,10 @@ var __importStar = (this && this.__importStar) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 const readline = __importStar(require("readline"));
+class Color {
+}
+Color.BLACK = 'B';
+Color.WHITE = 'W';
 class Board {
     constructor() {
         this.size = 8;
