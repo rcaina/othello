@@ -49,6 +49,84 @@ class Board {
         const col = colChar.charCodeAt(0) - 97;
         const row = parseInt(rowChar) - 1;
 
+        function checkUp(board: Piece[][], row: number, col: number, player: Piece) {
+            const opponent = player === Color.BLACK ? Color.WHITE: Color.BLACK;
+            const needToFlip: [number, number][] = [];
+            let r = row - 1;
+
+            while(r >= 0 && board[r][col] === opponent){
+                needToFlip.push([r, col]);
+                r--;
+            }
+
+            if(r >=0 && board[r][col] === player && needToFlip.length > 0){
+                for(const [fr, fc] of needToFlip){
+                    board[fr][fc] = player;
+                }
+                return true;
+            }
+
+            return false;
+        }
+        function checkDown(board: Piece[][], row: number, col: number, player: Piece) {
+            const opponent = player === Color.BLACK ? Color.WHITE: Color.BLACK;
+            const needToFlip: [number, number][] = [];
+            let r = row + 1;
+
+            while(r < 8 && board[r][col] === opponent){
+                needToFlip.push([r, col]);
+                r++;
+            }
+
+            if(r < 8 && board[r][col] === player && needToFlip.length > 0){
+                for(const [fr, fc] of needToFlip){
+                    board[fr][fc] = player;
+                }
+                return true;
+            }
+
+            return false;
+        }
+        function checkRight(board: Piece[][], row: number, col: number, player: Piece) {
+            const opponent = player === Color.BLACK ? Color.WHITE: Color.BLACK;
+            const needToFlip: [number, number][] = [];
+            let c = col + 1;
+
+            while(c < 8 && board[row][c] === opponent){
+                needToFlip.push([row, c]);
+                c++;
+            }
+
+            if(c < 8 && board[row][c] === player && needToFlip.length > 0){
+                for(const [fr, fc] of needToFlip){
+                    board[fr][fc] = player;
+                }
+                return true;
+            }
+
+            return false;
+        }
+        function checkLeft(board: Piece[][], row: number, col: number, player: Piece) {
+            const opponent = player === Color.BLACK ? Color.WHITE: Color.BLACK;
+            const needToFlip: [number, number][] = [];
+            let c = col - 1;
+
+            while(c >= 0 && board[row][c] === opponent){
+                needToFlip.push([row, c]);
+                c--;
+            }
+
+            if(c >= 0 && board[row][c] === player && needToFlip.length > 0){
+                for(const [fr, fc] of needToFlip){
+                    board[fr][fc] = player;
+                }
+                return true;
+            }
+
+            return false;
+        }
+        
+
         if (
             col < 0 || col >= this.size ||
             row < 0 || row >= this.size ||
@@ -60,7 +138,51 @@ class Board {
 
         //TODO: Implementation here
 
+        let validMove = false;
+
+        //checkUp
+        if(row - 1 >= 0 && this.board[row-1][col] !== null && this.board[row-1][col] !== this.currentPlayer){
+            const valid = checkUp(this.board, row, col, this.currentPlayer);
+            if(valid){
+                validMove = true;
+            }
+        }
+        //checkDown
+        if(row + 1 >= 0 && this.board[row+1][col] !== null && this.board[row+1][col] !== this.currentPlayer){
+            const valid = checkDown(this.board, row, col, this.currentPlayer);
+            if(valid){
+                validMove = true;
+            }
+        }
+        //checkRight
+        if(col + 1 >= 0 && this.board[row][col+1] !== null && this.board[row][col+1] !== this.currentPlayer){
+            const valid = checkRight(this.board, row, col, this.currentPlayer);
+            if(valid){
+                validMove = true;
+            }
+        }
+        //checkLeft
+        if(col - 1 >= 0 && this.board[row][col-1] !== null && this.board[row][col-1] !== this.currentPlayer){
+            const valid = checkLeft(this.board, row, col, this.currentPlayer);
+            if(valid){
+                validMove = true;
+            }
+        }
+        //checkUpRight
+        //checkUpLeft
+        //checkDownRight
+        //checkDownLeft
+
+        if(!validMove){
+            console.log("Invalid move. Try again.");
+            return false;
+        }
+
+
         this.board[row][col] = this.currentPlayer;
+
+        //switch turns after succesful move
+        this.currentPlayer = this.currentPlayer === Color.BLACK ? Color.WHITE : Color.BLACK;
         return true;
     }
 }
