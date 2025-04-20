@@ -13,7 +13,7 @@ Given steps to tackle problem:
 - 1. work on switching turns
 - 2. work on validation
 - 3. work on capturing on successful move
-- 4. (this one I cannot remember)
+- 4. end game after 2 skipped turns
 - 5. If you finish early add any type of AI - can be super simple
 
 Time: 1 Hour
