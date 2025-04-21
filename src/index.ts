@@ -328,7 +328,7 @@ let consecutivePasses = 0;
 function promptMove() {
     game.printBoard();
 
-    function declareWinner() {
+    function determineWinner() {
         let blackCount = 0;
         let whiteCount = 0;
     
@@ -355,7 +355,7 @@ function promptMove() {
 
         if (consecutivePasses >= 2) {
             console.log("No valid moves for both players. Game over.");
-            declareWinner();
+            determineWinner();
             rl.close();
             return;
         }
